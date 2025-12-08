@@ -60,4 +60,39 @@ export const signup = async (req, res) => {
     return res.status(500).json({ message: "there is some error" });
   }
 };
-// ...existing code...
+export const login = async (req,res) =>{
+  // Login functionality to be implemented
+  const {email,password}  = req.body; // Destructure email and password from request body
+  try{
+    if(!email || ! password) {
+      return res.status(400).json({message:"All the fields are required "});// Check if email and password are provided
+    }
+    const user = await User.findOne({email});// Find user by email
+    if(!user){
+      return res.status(400).json({message:"User does not exist"});// If user not found, return error
+
+    }
+    const isMatch = await bcrypt.compare(password,user.password);// Compare provided password with stored hashed password
+    if(!isMatch){
+      return res.status(400).json({message: 
+        "Invalid credentials"});// If password does not match, return error
+
+    }
+    generateToken(user._id,res);// Generate token for authenticated user
+    return res.status(200).json({
+      _id:user._id,
+      fullName:user.fullName,
+      email:user.email,
+      profilePic:user.profilePic,
+    })// Return user details in response
+  }catch(error){
+    console.log("Error in login:",error);
+    return res.status(500).json({message:"server error"})
+  }
+} 
+
+
+export const logout = (_, res) => {
+  res.cookie("jwt", "", { maxAge: 0 });
+  res.status(200).json({ message: "Logged out successfully" });
+};
