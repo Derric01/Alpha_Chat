@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
-  "engines":{
-    "node":">=20.0.0"
+  "engines": {
+    "node": ">=20.0.0"
   },
   "scripts": {
     "build": "npm install --prefix backend && npm install --prefix frontend && npm run build --prefix frontend",
@@ -21,5 +21,9 @@
   "bugs": {
     "url": "https://github.com/Derric01/Alpha_Chat/issues"
   },
-  "homepage": "https://github.com/Derric01/Alpha_Chat#readme"
+  "homepage": "https://github.com/Derric01/Alpha_Chat#readme",
+  "dependencies": {
+    "@arcjet/inspect": "^1.0.0-beta.10",
+    "@arcjet/node": "^1.0.0-beta.10"
+  }
 }
